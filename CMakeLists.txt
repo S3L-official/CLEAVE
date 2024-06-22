@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(CLEAVE)
+
+
+set(CMAKE_CXX_STANDARD 14)
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+
+INCLUDE_DIRECTORIES(./include)
+LINK_DIRECTORIES(./bin)
+
+add_executable(CLEAVE FIRMER_extend.cpp)
+target_link_libraries(CLEAVE z3)
+target_link_libraries(CLEAVE -lpthread -lm)

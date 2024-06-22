@@ -1,0 +1,42 @@
+# HOW-TO:
+#  1) general.cores:                For auto-detection of number of cores used during analysis provide "general.cores = 0", otherwise specify number of cores.
+#  2) general.memory:               Specifies the amount of RAM to be used for the internal computation on BDDs (given in GB by "general.memory").
+#  3) general.verbos:               Specifies the level of verbosity:
+#                                       - 0: off (report results only)
+#                                       - 1: on (report results and details)
+# 
+#  4) library.file:                 Path to the library file which defines the functionalities of the available gates in the netlist (as an example see cell/Library.txt).
+#  5) library.file:                 Name of the library that is used from the library file.
+# 
+#  6) circuit.dut:                  List all Designs Under Test (DUTs) (with spaces as separating character).
+#  7) circuit.module:               If a verilog netlist (i.e., *.v file) is selected as DUT, the name of the topmodule needs to be specified with this parameter.
+#  8) circuit.correction_based:     Specifies if the underlying countermeasure is detection or correction based (false/true). For more custom countermeasures the evaluate()-function in src/passes/analysis/fault.cpp needs to be adapted.
+# 
+#  9) fault.number:                 Specifies the maximum number of simultaneously injected faults in one logic stage. Corresponds to parameter *n* in the paper.
+# 10) fault.variate:                Defines univariate, bivariate, ... (1,2,3,...).
+# 11) fault.mapping:                Path to the fault mapping that should be used for analysis. Examples can be found in model/. Corresponds to the parameter *t* in the paper.
+# 12) fault.location:               Specifies the location where faults should be injected (location: c, s, cs). Corresponds to the parameter *l* in the paper.
+# 13) fault.blacklist:              Points to a txt-file that contains a list of all entities that should be excluded from the analysis.
+# 14) fault.reduced_complexity:     Applies different strategies to reduce the complexity: 0: disable - 1: naive - 2: aggrassive - 3: conservative (The third option was presented in the paper)
+# 15) fault.interrupt:              Set to true: verification is interrupted if an effective fault is detected - detailed report of fault location, mapping, and input vectors.
+
+[general]
+cores               = 8
+memory              = 8
+verbose             = 0
+[library]
+file                = cell/Library.txt
+name                = NANG45
+[circuit]
+dut                 = test_com/aes128/1bitcom1.nl
+module              = sbox_wrapper
+correction_based    = false
+[fault]
+number              = 1
+variate             = 1
+mapping             = model/mixed.txt
+location            = cs
+blacklist           = test_com/aes128/1bit_blacklist.txt
+reduced_complexity  = 3
+interrupt           = true
+composition         = false
